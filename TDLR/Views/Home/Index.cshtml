@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Intro Header -->
+<header class="intro">
+    <div class="intro-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 brand-title">
+                    @*<h1 class="brand-heading"><i class="fa fa-list"></i> TO-DO LIST</h1>*@
+                    <h1 class="brand-heading"><i class="fa fa-check-square-o"></i> TO-DO LIST</h1>
+                    <h2>(reimagined)</h2>
+                    <p class="intro-text">The best* way to keep track of your team's work.</p>
+                </div>
+                
+                <div class="col-md-4 brand-title">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                                </div>
+                                <div class="form-group" id="aad-button" hidden>
+                                    <a class="btn btn-block btn-msft" href="/Account/SignIn"><img src="~/img/microsoft-icon.png" class="msft-icon" />Sign up with your Work or School account</a>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                </div>
+                                <div class="super-tiny-text">By signing up, you agree to our <a href="javascript:void(0)">Terms and Conditions</a></div>
+                                <input type="submit" value="Sign up for TDLR;" class="btn btn-block btn-em">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row scroll-arrow">
+                <div class="col-md-12">
+                    <a href="#about" class="btn btn-circle page-scroll">
+                        <i class="fa fa-angle-double-down animated"></i>
+                    </a>
+                    <p class="tiny-text">*Not actually the best.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>About TDLR;</h2>
+            <p>Soooooo, yeah.  To-Do List Reimagined isn't a <em>real</em> app, per se.  But it can help you understand how to integrate your app with Azure Active Directory in a realistic way.  In the sign-up form, try typing in an email address of a user with an Azure AD account.  Then sign in as that user, and get started adding some tasks to that user's to-do list.</p>
+            <p>Once you've explored sign-up and sign-in, try sharing a task with other users in your company, and watch TDLR take the company by storm.</p>
+            <p>Finally, click the Admin link to login as an admin of your company and view a list of users that have been assigned to the app.  As you add/remove users, TDLR's user store is automatically updated.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Download Section -->
+<section id="download" class="content-section text-center">
+    <div class="download-section">
+        <div class="container">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Download TDLR;</h2>
+                <p>You can view the source code for TDLR; on GitHub.</p>
+                <a href="https://github.com/azure-samples/name-of-repo" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Azure-Samples on Github</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="container content-section text-center">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h2>Contact Azure AD</h2>
+            <p>We're here to help with all your questions about integrating with Azure AD.  We've already posted a lot of good stuff though, so check out our documenation first!</p>
+            <ul class="list-inline banner-social-buttons">
+                <li>
+                    <a href="https://twitter.com/AzureAD" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                </li>
+                <li>
+                    <a href="https://stackoverflow.com/tags/azure-active-directory" class="btn btn-default btn-lg"><i class="fa fa-stack-overflow"></i> <span class="network-name">Stack Overflow</span></a>
+                </li>
+                <li>
+                    <a href="https://github.com/AzureAD" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                </li>
+                <li>
+                    <a href="https://aka.ms/aaddev" class="btn btn-default btn-lg"><span class="network-name">Azure.com</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+@Scripts.Render("~/Scripts/detect_aad")

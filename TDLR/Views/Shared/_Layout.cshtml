@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/my-jquery-ui.css" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/AadPickerLibrary")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/grayscale")
+    @Styles.Render("~/Content/font-awesome")
+    @Scripts.Render("~/Scripts/grayscale")
+    @RenderSection("scripts", required: false)
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    tdlr;
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll navbar-normal" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll navbar-normal" href="#contact">Contact</a>
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+                        <li>
+                            <a class="page-scroll navbar-normal" href="/Tasks">Tasks</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll navbar-normal" href="/Account/SignOut">@User.Identity.Name</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a class="page-scroll navbar-em" href="/Account/SignIn">Sign In</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Body -->
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Azure Active Directory DevEx</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

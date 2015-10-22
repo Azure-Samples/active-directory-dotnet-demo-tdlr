@@ -1,0 +1,280 @@
+﻿/*body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}*/
+
+.panel {
+    display: inline-block;
+    width: 500px;
+}
+
+.scroll-arrow {
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.brand-title {
+    vertical-align: middle;
+    display: inline-block;
+    float: none;
+}
+
+.panel-default {
+    background-color: rgba(255, 255, 255, 0.5);
+    border:none;
+}
+
+.panel-body {
+    margin: 20px 10px 0px 10px;
+}
+
+.btn-em {
+    background-color: lightcoral;
+    border: none;
+    padding: 20px 10px 20px 10px; 
+
+    font-size: 20px;
+}
+
+.btn-em:hover,
+.btn-em:active,
+.btn-em:focus {
+    background-color: rgb(255, 136, 136);
+    color: white;
+}
+
+.btn-msft {
+    padding: 15px 10px 15px 10px;
+    background-color: white;
+    color: rgb(85,85,85); 
+    border-width: 1px;
+    border-color: rgb(204, 204, 204);
+    border-radius: 2px;
+}
+
+.btn-msft:hover,
+.btn-msft:focus,
+.btn-msft:active {
+    background-color: rgba(245,245,245,.8);
+    color: rgb(85,85,85);
+}
+    
+
+.msft-icon {
+    margin-right: 20px;
+}
+
+.form-control {
+    height: 50px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 20px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.form-control::selection {
+    background: lightblue;
+}
+
+.tiny-text {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.super-tiny-text {
+    font-size: 15px;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 50px 10px 15px 10px;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: url('../fonts/Pacifico.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.navbar-em {
+    color: lightcoral;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 500px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.assign-role {
+    float:left;
+}
+
+.search-hint {
+    width:200px;    
+}
+
+#search {
+    width:300px;
+}
+
+#assign-role {
+    padding-bottom: 20px;
+}
+
+#assign-role-form {
+    padding-right: 20px;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#assign-role-search {
+
+}
+
+.assign-role-label {
+    float:left;
+    width:175px;
+    text-align:right;
+    padding-right: 10px;
+}
+
+#assign-role-select {
+
+}
+
+.search-results-label {
+    width:inherit;
+    text-align:center;
+    border-bottom:solid;
+    border-bottom-width:thin;
+}
+
+#search-results {
+    display:inline-block;
+}
+
+.assign-role-row {
+    padding-bottom:10px;
+}
+
+#submit-button {
+    width:100px;
+}
+
+#assign-role-dropdown {
+    width:100px;
+}
+
+/*####################################*/
+
+.task-text {
+    width:auto;
+}
+
+.task-status {
+    width:auto;
+
+}
+
+.task-owner {
+}
+
+.task-share {
+    font-size:small;
+    float:left;
+}
+
+.share-list {
+    padding-bottom:30px;
+}
+
+.remove-button {
+    border:none;
+    background-color:transparent;
+    color:blue;
+    text-decoration:underline;
+    padding:0px;
+    padding-left:10px;
+}
+
+.task {
+    padding-bottom:10px;
+}
+
+.task-actions {
+    padding-top: 20px;
+
+}
+
+.task-action-label {
+    padding-right:10px;
+    float:left;
+}
+
+.add-task {
+    display:inline-block;
+    padding-bottom:5px;
+}
+
+.add-task-input {
+    float:left;
+    padding-right:10px;
+}
+
+.add-task-input-box {
+    width:190px;
+}
+
+.update-tasks {
+    display:inline-block;
+}
+
+.update-spacer {
+    height:0px;
+    float:left;
+    width:200px;
+}
+
+.share-link {
+    cursor:pointer;
+    color:blue;
+    text-decoration:underline;
+    padding-left:5px;
+}
+

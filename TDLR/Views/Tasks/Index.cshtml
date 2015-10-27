@@ -1,92 +1,133 @@
-﻿@{
+﻿@Styles.Render("~/Content/tasks")
+
+@{
     ViewBag.Title = "Tasks";
 }
 
-<h2>Tasks</h2>
-
-<p>
-    This page uses Group Claims to determine which tasks have been shared with the user.  
-    Tasks that the user created can be shared with other users and groups.  
-    Tasks that have been shared with the user display the owner's name.
-</p>
-
-@if (User.Identity.IsAuthenticated)
-{
-    using (Html.BeginForm("TaskSubmit", "Tasks", FormMethod.Post, new { id = "share-form" }))
+<center class="page-body">
+    @if (User.Identity.IsAuthenticated)
     {
-        <button name="delete" value="" style="display:none"></button>
+        <h2>@User.Identity.Name's tasks</h2>
 
-            <div class="container" style="padding-top:10px">
-                <div class="row">
-                    <div class="col-md-4"><h4>Task</h4></div>
-                    <div class="col-md-3"><h4>Status</h4></div>
-                    <div class="col-md-3"><h4>Share</h4></div>
-                    <div class="col-md-2"><h4></h4></div>
-                </div>
-
-
-                @foreach (Tdlr.Models.Task task in (List<Tdlr.Models.Task>)ViewData["tasks"])
-                {
-                    <div class="row task">
-                        <div class="col-md-4">
-                            <div class="task-text">
-                                @task.TaskText
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <select name="task-id:@task.TaskID" class="task-status">
-                                @foreach (string status in Tdlr.Utils.Globals.Statuses)
-                            {
-                                if (status == task.Status)
-                                {
-                                    <option value="@status" selected class="task-status">@status</option>
-                                }
-                                else
-                                {
-                                    <option value="@status" class="task-status">@status</option>
-                                }
-                            }
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            @if (task.Creator == (string)ViewData["userId"])
-                        {
-                                <div class="task-owner">
-                                    <a href="/Tasks/Share?id=@task.TaskID" class="share-link">
-                                        @(task.SharedWith.Count - 1) Share(s)
-                                    </a>
-                                </div>
-                        }
-                        else
-                        {
-                                <div class="task-owner">Owner: @task.CreatorName</div>
-                        }
-                        </div>
-                        <div class="col-md-2">
-                            <div>
-                                @if (task.Creator == (string)ViewData["userId"])
-                            {
-                                    <button name="delete" value="@task.TaskID" class="remove-button"><a class="share-link">Delete</a></button>
-                            }
-                            </div>
+        <div class="container">
+            <hr />
+            <p class="generic-error text-danger" hidden>An error occurred, you might need to refresh the page.</p>
+            <div class="row">
+                <form role="form" method="post" action="/tasks">
+                    <div class="add-task col-md-10">
+                        <div class="form-group">
+                            <input type="text" name="text" id="addTask" class="add-task form-control input-sm" placeholder="Add a task...">
                         </div>
                     </div>
-            }
-
-                <div class="row task-actions">
-                    <div class="col-md-4 add-task">
-                        <div class="add-task-input">
-                            <input type="text" name="newTask" class="add-task-input-box">
-                        </div>
-                        <button name="addTask" value="Add Task">Add Task</button>
+                    <div class="add-task col-md-2">
+                        <input type="submit" value="Add" class="btn btn-block btn-em">
                     </div>
-                    <div class="col-md-3 update-tasks">
-                        <button name="updateTasks" value="Update Tasks">Update Tasks</button>
-                    </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-2"></div>
-                </div>
+                </form>
             </div>
-            }
-            }
+        </div>
+
+
+        <div class="container">
+            <div class="row">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6">Task</th>
+                            <th class="col-md-2">Status</th>
+                            <th class="col-md-4"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (Tdlr.Models.Task task in (List<Tdlr.Models.Task>)ViewData["tasks"])
+                        {
+                            <tr>
+                                <td class="col-md-6 task-text task">@task.TaskText</td>
+                                <td class="col-md-2 task">
+                                    <select name="task-id:@task.TaskID" class="task-status" data-og-value="@task.Status">
+                                        @foreach (string status in Tdlr.Utils.Globals.Statuses)
+                                        {
+                                            if (status == task.Status)
+                                            {
+                                                <option value="@status" selected class="task-status">@status</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@status" class="task-status">@status</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td class="col-md-4 task">
+                                    @if (task.Creator == (string)ViewData["userId"])
+                                    {
+                                        <button name="share" type="button" value="@task.TaskID" class="task-action task-share" data-toggle="modal" data-target="#myModal"><i class="fa fa-share-alt fa-lg"></i></button>
+                                        <button name="delete" type="button" value="@task.TaskID" class="task-action task-delete"><i class="fa fa-trash-o fa-lg"></i></button>
+                                        <button name="update" type="button" value="@task.TaskID" class="task-action task-save" hidden><i class="fa fa-floppy-o fa-lg"></i></button>
+                                        <div class="task-confirm">
+                                            <div class="task-confirm-hide" hidden>
+                                                <button type="button" name="confirmDelete" value="@task.TaskID" class="task-confirm btn btn-danger">Confirm</button>
+                                                <button name="cancelDelete" type="button" value="@task.TaskID" class="task-cancel btn">Nevermind</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="task-owner">@task.CreatorName</div>
+                                        <button name="updateTasks" value="@task.TaskID" class="task-action task-save" hidden><i class="fa fa-floppy-o fa-lg"></i></button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</center>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="search" id="search" class="search form-control input-sm" placeholder="Search for users...">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Shared With</th>
+                        </tr>
+                    </thead>
+                    <tbody class="share-modal"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-share" data-dismiss="modal">Save Changes</button>
+                <button type="button" class="btn btn-share-cancel" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/tasks")
+
+<script>
+    // People/Group Picker Code
+    var maxResultsPerPage = 14;
+    var input = document.getElementById("search");
+    var $input = $(input);
+    var tenant = "@ViewData["tenant"]";
+
+    var picker = new AadPicker(maxResultsPerPage, input, "/proxy/search", tenant);
+
+    $input.on("picker-select", function (e) {
+        appendShare({ objectId: picker.Selected().objectId, displayName: picker.Selected().displayName });
+    });
+</script>
 

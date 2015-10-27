@@ -28,6 +28,10 @@ namespace Tdlr
                     "~/Scripts/detect_aad.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/Scripts/tasks").Include(
+                    "~/Scripts/task-form.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/Scripts/grayscale").Include(
                     "~/Scripts/grayscale.js"
                 ));
@@ -44,6 +48,18 @@ namespace Tdlr
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/homepage").Include(
+                "~/Content/home.css"
+            ));
+
+            bundles.Add(new StyleBundle("~/Content/signin").Include(
+                "~/Content/signin.css"
+            ));
+
+            bundles.Add(new StyleBundle("~/Content/tasks").Include(
+                "~/Content/tasks.css"
+            ));
 
             bundles.Add(new StyleBundle("~/Content/grayscale").Include(
                 "~/Content/grayscale.css"

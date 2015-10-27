@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -27,6 +29,32 @@ namespace Tdlr.Controllers
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Search(string query)
+        {
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+                string token = GraphHelper.AcquireToken(ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value);
+                HttpClient client = new HttpClient();
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, query);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseString = await response.Content.ReadAsStringAsync();
+                    return Content(responseString, "application/json");
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(response.StatusCode);
+                }
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
         }
     }
 }

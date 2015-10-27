@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 //The following libraries were defined and added to this sample.
 using Tdlr.DAL;
 using Tdlr.Utils;
-
+using System.Net;
 
 namespace Tdlr.Controllers
 {
@@ -20,86 +20,135 @@ namespace Tdlr.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            try
-            {
-                // Get All Tasks User Can View
-                ClaimsIdentity userClaimsId = ClaimsPrincipal.Current.Identity as ClaimsIdentity;
-                List<string> userGroupsAndId = await ClaimHelper.GetGroups(userClaimsId);
-                string userObjectId = userClaimsId.FindFirst(Globals.ObjectIdClaimType).Value;
-                userGroupsAndId.Add(userObjectId);
-                ViewData["tasks"] = TasksDbHelper.GetAllTasks(userGroupsAndId);
-                ViewData["userId"] = userObjectId;
-                return View();
-            }
-            catch (Exception e)
-            {
-                // Catch Both ADAL Exceptions and Web Exceptions
-                return RedirectToAction("ShowError", "Error", new { errorMessage = e.Message });
-            }
-        }
-
-        [HttpPost]
-        [Authorize]
-        public ActionResult TaskSubmit(FormCollection formCollection)
-        {
-            // Create a new task
-            if (formCollection["newTask"] != null && formCollection["newTask"].Length != 0)
-            {
-                TasksDbHelper.AddTask(formCollection["newTask"],
-                    ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value,
-                    ClaimsPrincipal.Current.FindFirst(Globals.GivennameClaimType).Value + ' '
-                    + ClaimsPrincipal.Current.FindFirst(Globals.SurnameClaimType).Value);
-            }
-
-            // Change status of existing task
-            if (formCollection["updateTasks"] != null)
-            {
-                foreach (string key in formCollection.Keys)
-                {
-                    if (key.StartsWith("task-id:"))
-                        TasksDbHelper.UpdateTask(Convert.ToInt32(key.Substring(key.IndexOf(':') + 1)), formCollection[key]);
-                }
-            }
-
-            // Delete a Task
-            if (formCollection["delete"] != null && formCollection["delete"].Length > 0)
-                TasksDbHelper.DeleteTask(Convert.ToInt32(formCollection["delete"]));
-            
-            return RedirectToAction("Index", "Tasks");
+            ClaimsIdentity userClaimsId = ClaimsPrincipal.Current.Identity as ClaimsIdentity;
+            string userObjectId = userClaimsId.FindFirst(Globals.ObjectIdClaimType).Value;
+            ViewData["userId"] = userObjectId;
+            ViewData["tenant"] = ClaimsPrincipal.Current.FindFirst(Globals.TenantIdClaimType).Value;
+            List<string> userGroupsAndId = await ClaimHelper.GetGroups(userClaimsId);
+            userGroupsAndId.Add(userObjectId);
+            ViewData["tasks"] = TasksDbHelper.GetAllTasks(userGroupsAndId);
+            return View();
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult Share(string id)
+        public async Task<ActionResult> Get()
         {
-            // Values Needed for the People Picker
-            ViewData["tenant"] = ClaimsPrincipal.Current.FindFirst(Globals.TenantIdClaimType).Value;
-            ViewData["token"] = GraphHelper.AcquireToken(ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value);
-
-            // Get the task details
-            Tdlr.Models.Task task = TasksDbHelper.GetTask(Convert.ToInt32(id));
-            if (task == null)
-                RedirectToAction("ShowError", "Error", new { message = "Task Not Found in DB." });
-            ViewData["shares"] = task.SharedWith.ToList();
-            ViewData["taskText"] = task.TaskText;
-            ViewData["taskId"] = task.TaskID;
-            ViewData["userId"] = ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value;
-            return View();
+            List<object> tasks = new List<object>();
+            ClaimsIdentity userClaimsId = ClaimsPrincipal.Current.Identity as ClaimsIdentity;
+            List<string> userGroupsAndId = await ClaimHelper.GetGroups(userClaimsId);
+            string userObjectId = userClaimsId.FindFirst(Globals.ObjectIdClaimType).Value;
+            userGroupsAndId.Add(userObjectId);
+            foreach (Models.Task task in TasksDbHelper.GetAllTasks(userGroupsAndId))
+            {
+                tasks.Add(new
+                {
+                    Creator = task.Creator,
+                    CreatorName = task.CreatorName,
+                    Status = task.Status,
+                    TaskID = task.TaskID,
+                    TaskText = task.TaskText
+                });
+            }
+            return Json(tasks, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Get(int id)
+        {
+            List<object> tasks = new List<object>();
+            Models.Task task = TasksDbHelper.GetTask(id);
+            tasks.Add(new
+            {
+                Creator = task.Creator,
+                CreatorName = task.CreatorName,
+                Status = task.Status,
+                TaskID = task.TaskID,
+                TaskText = task.TaskText
+            });
+                
+            return Json(tasks, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         [Authorize]
-        public ActionResult Share(int taskId, string objectId, string displayName, string delete, string shareTasks)
+        public ActionResult Create(string text)
         {
-            // If the share button was clicked, share the task with the user or group
-            if (shareTasks != null && objectId != null && objectId != string.Empty && displayName != null && displayName != string.Empty)
-                TasksDbHelper.AddShare(taskId, objectId, displayName);
+            // Create a new task
+            if (text != null && text.Length != 0)
+            {
+                Models.Task task = TasksDbHelper.AddTask(text,
+                    ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value,
+                    ClaimsPrincipal.Current.FindFirst(Globals.GivennameClaimType).Value + ' '
+                    + ClaimsPrincipal.Current.FindFirst(Globals.SurnameClaimType).Value);
 
-            // If a delete button was clicked, remove the share from the task
-            if (delete != null && delete.Length > 0)
-                TasksDbHelper.DeleteShare(taskId, delete);
+                var newTask = new
+                {
+                    Creator = task.Creator,
+                    CreatorName = task.CreatorName,
+                    Status = task.Status,
+                    TaskID = task.TaskID,
+                    TaskText = task.TaskText
+                };
 
-            return RedirectToAction("Share", new { id = taskId });
+                if (HttpContext.Request.Headers["Accept"].Contains("application/json"))
+                    return Json(newTask);
+
+                return RedirectToAction("Index");
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPatch]
+        [Authorize]
+        public ActionResult Update(int id, string status)
+        { 
+            Models.Task task = TasksDbHelper.UpdateTask(id, status);
+            var updatedTask = new
+            {
+                Creator = task.Creator,
+                CreatorName = task.CreatorName,
+                Status = task.Status,
+                TaskID = task.TaskID,
+                TaskText = task.TaskText
+            };
+
+            return Json(updatedTask);
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            TasksDbHelper.DeleteTask(id);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPatch]
+        [Authorize]
+        public ActionResult UpdateShares(int id, List<Models.Share> shares)
+        {
+            TasksDbHelper.UpdateShares(id, shares);
+            return Json(new { });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetShares(int id)
+        {
+            Models.Task task = TasksDbHelper.GetTask(id);
+            List<object> shares = new List<object>();
+            foreach (Models.AadObject share in task.SharedWith)
+            {
+                if (share.AadObjectID != ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value)
+                {
+                    shares.Add(new { objectId = share.AadObjectID, displayName = share.DisplayName });
+                }
+            }
+            return Json(shares, JsonRequestBehavior.AllowGet);
         }
     }
 }

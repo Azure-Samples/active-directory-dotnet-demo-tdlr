@@ -1,4 +1,4 @@
-﻿function AadPicker(maxResultsPerPage, input, token, tenant) {
+﻿function AadPicker(maxResultsPerPage, input, searchUrl, tenant) {
 
         // Inputs
         var resultsPerPage = maxResultsPerPage / 2;
@@ -74,10 +74,13 @@
         function SendQuery(graphQuery) {
 
             return $.ajax({
-                url: graphQuery,
-                type: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token,
+                url: searchUrl,
+                type: "POST",
+                data: {
+                    query: graphQuery
+                },
+                beforeSend: function (jqxhr, settings) {
+                    jqxhr.overrideMimeType("application/json");
                 }
             });
         }
@@ -102,23 +105,18 @@
             selected = null;
 
             var userQuery = ConstructUserQuery(inputValue);
-            var groupQuery = ConstructGroupQuery(inputValue);
 
             var userDeffered = new $.Deferred().resolve({ value: [] }, "success");
             var groupDeffered = new $.Deferred().resolve({ value: [] }, "success");
 
             if ((inputValue == lastDisplayed && userSkipToken) || inputValue != lastDisplayed)
                 userDeffered = SendQuery(userQuery);
-            if ((inputValue == lastDisplayed && groupSkipToken) || inputValue != lastDisplayed)
-                groupDeffered = SendQuery(groupQuery);
 
             var recordResults = function () {
-                return function (userQ, groupQ) {
+                return function (userQ) {
+                    if (userQ) {
 
-                    if (userQ[1] == "success" && groupQ[1] == "success"
-                        && userQ[0].error == undefined && groupQ[0].error == undefined) {
-
-                        var usersAndGroups = userQ[0].value.concat(groupQ[0].value);
+                        var usersAndGroups = userQ[0].value;
 
                         if (userQ[0]["odata.nextLink"] != undefined) {
                             userSkipToken = userQ[0]["odata.nextLink"]
@@ -127,14 +125,6 @@
                         }
                         else {
                             userSkipToken = null;
-                        }
-                        if (groupQ[0]["odata.nextLink"] != undefined) {
-                            groupSkipToken = groupQ[0]["odata.nextLink"]
-                                .substring(groupQ[0]["odata.nextLink"].indexOf("$skiptoken"),
-                                groupQ[0]["odata.nextLink"].length);
-                        }
-                        else {
-                            groupSkipToken = null;
                         }
 
                         if (lastDisplayed == null || inputValue != lastDisplayed) {
@@ -199,6 +189,9 @@
                         displayName: ui.item.label,
                         objectType: ui.item.objectType,
                     };
+                    $input.trigger("picker-select");
+                    $(this).val('');
+                    return false;
                 },
                 close: function (event, ui) {
                     isResultsOpen = false;

@@ -26,9 +26,19 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    tdlr;
-                </a>
+                @if (Request.Url.AbsolutePath == "/")
+                {
+                    <a class="navbar-brand page-scroll" href="#page-top">
+                        tdlr;
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-brand page-scroll" href="/">
+                        tdlr;
+                    </a>
+                }
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

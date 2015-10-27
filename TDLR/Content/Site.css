@@ -1,7 +1,24 @@
-﻿/*body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}*/
+﻿body {
+    background-color: rgb(240, 240, 240)
+}
+
+@media(min-width:768px) {
+    .navbar-custom {
+        padding: 20px 0;
+        border-bottom: 0;
+        letter-spacing: 1px;
+        background: 0 0;
+        -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        transition: background .5s ease-in-out,padding .5s ease-in-out;
+    }
+
+    .navbar-custom.top-nav-collapse {
+        padding: 5;
+        border-bottom: 1px solid rgba(255,255,255,.3);
+        background: #000;
+    }
+}
 
 .panel {
     display: inline-block;
@@ -34,7 +51,6 @@
     background-color: lightcoral;
     border: none;
     padding: 20px 10px 20px 10px; 
-
     font-size: 20px;
 }
 
@@ -149,10 +165,6 @@ input[type="checkbox"].input-validation-error {
     width:200px;    
 }
 
-#search {
-    width:300px;
-}
-
 #assign-role {
     padding-bottom: 20px;
 }
@@ -212,25 +224,8 @@ input[type="checkbox"].input-validation-error {
 
 }
 
-.task-owner {
-}
-
-.task-share {
-    font-size:small;
-    float:left;
-}
-
 .share-list {
     padding-bottom:30px;
-}
-
-.remove-button {
-    border:none;
-    background-color:transparent;
-    color:blue;
-    text-decoration:underline;
-    padding:0px;
-    padding-left:10px;
 }
 
 .task {

@@ -21,13 +21,19 @@ namespace Tdlr.Controllers
         /// <summary>
         /// Sends an OpenIDConnect Sign-In Request.
         /// </summary>
-        public void SignIn(string redirectUri)
+        public ActionResult SignIn()
+        {
+            return View();
+        }
+
+
+        public void AADSignIn(string redirectUri)
         {
             if (redirectUri == null)
                 redirectUri = "/";
 
             HttpContext.GetOwinContext()
-                .Authentication.Challenge(new AuthenticationProperties {RedirectUri = redirectUri},
+                .Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUri },
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }
 

@@ -28,7 +28,7 @@ namespace Tdlr.DAL
             return task;
         }
 
-        public static void AddTask(string taskText, string userObjectId, string userName)
+        public static Task AddTask(string taskText, string userObjectId, string userName)
         {
             // Add a new task to the db
             TdlrContext db = new TdlrContext();
@@ -60,9 +60,11 @@ namespace Tdlr.DAL
             newTask.SharedWith.Add(user);
             db.Tasks.Add(newTask);
             db.SaveChanges();
+
+            return newTask;
         }
 
-        public static void UpdateTask(int taskId, string status)
+        public static Task UpdateTask(int taskId, string status)
         {
             // Update an existing task in the db
             TdlrContext db = new TdlrContext();
@@ -72,6 +74,7 @@ namespace Tdlr.DAL
                 throw new Exception("Task Not Found in DB");
             task.Status = status;
             db.SaveChanges();
+            return task;
         }
 
         public static void DeleteTask(int taskId)
@@ -83,40 +86,34 @@ namespace Tdlr.DAL
             db.SaveChanges();
         }
 
-        public static void AddShare(int taskId, string objectId, string displayName)
+        public static void UpdateShares(int taskId, List<Share> shares)
         {
             //Share a task with a user or group
             TdlrContext db = new TdlrContext();
-            AadObject aadObject = db.AadObjects.Find(objectId);
-            if (aadObject != null)
-            {
-                aadObject.DisplayName = displayName;
-            }
-            else
-            {
-                aadObject = new AadObject
-                {
-                    AadObjectID = objectId,
-                    DisplayName = displayName,
-                };
-            }
             Task task = db.Tasks.Find(taskId);
-            List<AadObject> shares = task.SharedWith.ToList();
-            shares.Add(aadObject);
-            task.SharedWith = shares;
-            db.SaveChanges();
-        }
 
-        public static void DeleteShare(int taskId, string objectId)
-        {
-            // Remove access to a task for a user or group
-            TdlrContext db = new TdlrContext();
-            Task task = db.Tasks.Find(taskId);
-            List<AadObject> shares = task.SharedWith.ToList();
-            List<AadObject> aadObjects = shares.Where(a => a.AadObjectID.Equals(objectId)).ToList();
-            if (aadObjects.Count > 0)
-                shares.Remove(aadObjects.First());
-            task.SharedWith = shares;
+            // Maintain that the task is shared with the owner
+            AadObject user = task.SharedWith.Where(u => u.AadObjectID == task.Creator).FirstOrDefault();
+            task.SharedWith = new List<AadObject>();
+            task.SharedWith.Add(user);
+
+            foreach (Share share in shares)
+            {
+                AadObject aadObject = db.AadObjects.Find(share.objectID);
+                if (aadObject != null)
+                {
+                    aadObject.DisplayName = share.displayName;
+                }
+                else
+                {
+                    aadObject = new AadObject
+                    {
+                        AadObjectID = share.objectID,
+                        DisplayName = share.displayName,
+                    };
+                }
+                task.SharedWith.Add(aadObject);
+            }
             db.SaveChanges();
         }
     }

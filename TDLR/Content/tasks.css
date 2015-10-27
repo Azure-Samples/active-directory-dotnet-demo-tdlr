@@ -1,0 +1,207 @@
+﻿.page-body {
+    margin-top: 150px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: rgb(88, 88, 88);
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+hr {
+    border-color: rgb(161, 161, 161);
+    border-width: 2px;
+}
+
+input.add-task {
+    max-width: 1000px;
+    height: 40px;
+    padding: 20px;
+}
+
+.panel {
+    margin-top: 200px;
+}
+
+.checkbox {
+    color: black;
+}
+
+.task-owner {
+    display: inline-block;
+}
+
+.btn-em {
+    background-color: lightcoral;
+    border: none;
+    padding: 0px 0px 0px 0px;
+    font-size: 20px;
+    height: 40px;
+}
+
+.btn-em:hover,
+.btn-em:active,
+.btn-em:focus {
+    background-color: rgb(255, 136, 136);
+    color: white;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: rgb(204, 204, 204);
+}
+
+th {
+    color: rgb(88, 88, 88);
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+td.task {
+    color: rgb(88, 88, 88);
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.task-status {
+    border: none;
+    background-color: transparent;
+}
+
+.task-status:active,
+.task-status:focus,
+.task-status::selection {
+    border: none;
+    outline: none;
+}
+
+.task-share:active,
+.task-share:focus,
+.task-share::selection {
+    border: none;
+    outline: none;
+}
+
+.task-action {
+    border:none;
+    background-color:transparent;
+    padding:0px;
+    padding-left:10px;
+}
+
+.task-confirm {
+    margin-left: 20px;
+    border: none;
+}
+
+.task-cancel {
+    border: none;
+}
+
+.task-delete:active,
+.task-delete:focus,
+.task-delete::selection {
+    border: none;
+    outline: none;
+}
+
+.form-control {
+    font-family: sans-serif;
+}
+
+div.task-confirm {
+    display: inline-block;
+}
+
+div.task-confirm-hide {
+    display: none;
+}
+
+.modal-body {
+    color: black;
+}
+
+.modal-title {
+    overflow-x: hidden;
+}
+
+.search {
+    max-width: 1000px;
+    margin-bottom: 40px;
+}
+
+.share-action {
+    border:none;
+    background-color:transparent;
+    padding:0px;
+    padding-left:10px;
+}
+
+.ui-autocomplete {
+    z-index: 1100;
+}
+
+tbody.share-modal {
+    color: rgb(88, 88, 88);
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+button.share-remove {
+    color: rgb(233, 0, 0);
+}
+
+button.btn-share {
+    background-color: lightcoral;
+}
+
+button.btn-share:hover,
+button.btn-share:active,
+button.btn-share:focus {
+    background-color: rgb(255, 138, 138);
+    color: white;
+}
+
+button.btn-share-cancel {
+    color: rgb(80, 80, 80);
+}
+
+
+button.btn-share-cancel:hover,
+button.btn-share-cancel:active,
+button.btn-share-cancel:focus {
+    color: rgb(80, 80, 80);
+    background-color: rgb(200, 200, 200);
+}
+
+
+
+.brand {
+    margin-top: 50px;
+    font-weight: 200;
+    font-family: Pacifico,Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 60px;
+    color: lightcoral;
+}
+
+#aad-button {
+    margin-top: 100px;
+}
+
+.help {
+    color: gray;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    display: inline-block;
+}
+
+.help:hover {
+    color: lightcoral;
+    cursor: pointer;
+}
+
+div.help {
+    margin: 20px;
+    width: 100%;
+}

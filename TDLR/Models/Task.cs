@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Tdlr.Models
 {
@@ -20,6 +21,7 @@ namespace Tdlr.Models
         [Required]
         public string CreatorName { get; set; }
         [Required]
+        [JsonIgnore]
         public virtual ICollection<AadObject> SharedWith { get; set; }
     }
 }

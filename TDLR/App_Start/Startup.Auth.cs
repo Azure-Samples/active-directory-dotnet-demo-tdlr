@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security.ActiveDirectory;
 using Owin;
 
 //The following libraries were defined and added to this sample.
@@ -43,6 +44,12 @@ namespace Tdlr
                         AuthenticationFailed = OnAuthenticationFailed,
                     }
                 });
+
+            app.UseWindowsAzureActiveDirectoryBearerAuthentication(new WindowsAzureActiveDirectoryBearerAuthenticationOptions
+            {
+                Audience = "https://strockisdev.onmicrosoft.com/tldr",
+                Tenant = "strockisdev.onmicrosoft.com"
+            });
         }
 
         private Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)

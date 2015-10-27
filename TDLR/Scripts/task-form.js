@@ -29,14 +29,14 @@ $("button.task-cancel").click(function (e) {
 
 function appendShare(obj) {
     $tbody = $(".modal-body").find("tbody");
-    $tbody.append('<tr class="share-row" data-objectId="' + obj.objectId + '" data-displayName="' + obj.displayName + '"><td>' + obj.displayName + '</td><td><button name="remove" type="button" value="' + obj.objectId + '" class="share-action share-remove" onclick="removeShare(this)"><i class="fa fa-times fa-lg"></i></button></td></tr>')
+    $tbody.append('<tr class="share-row" data-objectId="' + obj.objectID + '" data-displayName="' + obj.displayName + '"><td>' + obj.displayName + '</td><td><button name="remove" type="button" value="' + obj.objectID + '" class="share-action share-remove" onclick="removeShare(this)"><i class="fa fa-times fa-lg"></i></button></td></tr>')
 }
 
 $("button.task-share").click(function (e) {
     $share = $(this)
     $(".modal-title").text($share.parent().siblings(".task-text").text())
     $(".modal-content").attr("data-taskId", $share.attr("value"));
-    $.getJSON("/tasks/" + $share.attr("value") + "/share", function (json) {
+    $.getJSON("/api/tasks/" + $share.attr("value") + "/share", function (json) {
         json.map(appendShare);
     });
 });
@@ -46,11 +46,13 @@ $("button.task-save").click(function (e) {
     var $status = $(this).parents("tr").find("select.task-status");
     var newStatus = $status.val();
     $.ajax({
-        url: "/tasks/" + taskId,
-        type: "PATCH",
-        data: {
-            status: newStatus
-        },
+        url: "/api/tasks/" + taskId,
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+            Status: newStatus,
+        }),
         beforeSend: function (jqxhr, settings) {
             jqxhr.overrideMimeType("application/json");
         }
@@ -66,7 +68,7 @@ $("button.task-confirm").click(function (e) {
     var taskId = $(this).val();
     var $btn = $(this);
     $.ajax({
-        url: "/tasks/" + taskId,
+        url: "/api/tasks/" + taskId,
         type: "DELETE",
     })
     .done(function (task) {
@@ -82,18 +84,18 @@ $("button.btn-share").click(function (e) {
     var shares = []
     $shares.each(function () {
         shares.push({
-            objectId: $(this).attr("data-objectId"),
+            objectID: $(this).attr("data-objectId"),
             displayName: $(this).attr("data-displayName")
         });
         $(this).remove();
     });
 
     $.ajax({
-        url: "/tasks/" + taskId + "/share",
-        type: "PATCH",
-        data: {
-            shares: shares
-        },
+        url: "/api/tasks/" + taskId + "/share",
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(shares),
         beforeSend: function (jqxhr, settings) {
             jqxhr.overrideMimeType("application/json");
         }

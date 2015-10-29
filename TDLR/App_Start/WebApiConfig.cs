@@ -31,8 +31,8 @@ namespace Tdlr
 
             config.Routes.MapHttpRoute(
                 name: "CreateApi",
-                routeTemplate: "api/tasks/{id}",
-                defaults: new { id = RouteParameter.Optional, controller = "TasksApi", action = "Create" },
+                routeTemplate: "api/tasks",
+                defaults: new { controller = "TasksApi", action = "Create" },
                 constraints: new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
             );
 

@@ -37,12 +37,12 @@ namespace Tdlr.Controllers
 
         [HttpPost]
         [Authorize]
-        public Models.Task Create(string text)
+        public Models.Task Create(Models.Task task)
         {
             // Create a new task
-            if (text != null && text.Length != 0)
+            if (task.TaskText != null && task.TaskText.Length != 0)
             {
-                return TasksDbHelper.AddTask(text,
+                return TasksDbHelper.AddTask(task.TaskText,
                     ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value,
                     ClaimsPrincipal.Current.FindFirst(Globals.GivennameClaimType).Value + ' '
                     + ClaimsPrincipal.Current.FindFirst(Globals.SurnameClaimType).Value);

@@ -34,6 +34,7 @@ namespace Tdlr
                     ClientId = ConfigHelper.ClientId,
                     Authority = String.Format(CultureInfo.InvariantCulture, ConfigHelper.AadInstance, "common"),
                     PostLogoutRedirectUri = ConfigHelper.PostLogoutRedirectUri,
+                    RedirectUri = ConfigHelper.PostLogoutRedirectUri,
                     TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters
                     {
                         ValidateIssuer = false
@@ -42,14 +43,31 @@ namespace Tdlr
                     {
                         AuthorizationCodeReceived = OnAuthorizationCodeReceived,
                         AuthenticationFailed = OnAuthenticationFailed,
+                        RedirectToIdentityProvider = OnRedirectToIdentityProvider,
                     }
                 });
 
             app.UseWindowsAzureActiveDirectoryBearerAuthentication(new WindowsAzureActiveDirectoryBearerAuthenticationOptions
             {
-                Audience = "https://strockisdev.onmicrosoft.com/tldr",
-                Tenant = "strockisdev.onmicrosoft.com"
+                Audience = "https://strockisdevtwo.onmicrosoft.com/tdlr",
+                Tenant = "strockisdevtwo.onmicrosoft.com",
+                TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                }
             });
+        }
+
+        private Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
+        {
+            if (notification.Request.Path.Value.ToLower() == "/account/signup/aad")
+            {
+                notification.ProtocolMessage.Prompt = "consent";
+                string login_hint = notification.OwinContext.Authentication.AuthenticationResponseChallenge.Properties.Dictionary["login_hint"];
+                notification.ProtocolMessage.LoginHint = login_hint;
+            }
+
+            return Task.FromResult(0);
         }
 
         private Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)

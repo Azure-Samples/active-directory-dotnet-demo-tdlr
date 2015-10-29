@@ -11,6 +11,8 @@ namespace Tdlr
 
             routes.MapRoute("aad", "account/signin/aad", new { controller = "Account", action = "AADSignIn" });
 
+            routes.MapRoute("aadsignup", "account/signup/aad", new { controller = "Account", action = "AADSignUp" });
+
             routes.MapRoute("create", "tasks",
                 new { controller = "Tasks", action = "Create" },
                 new { httpMethod = new HttpMethodConstraint("POST") });

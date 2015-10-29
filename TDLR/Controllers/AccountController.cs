@@ -13,6 +13,7 @@ using Tdlr.Utils;
 using System;
 using System.Globalization;
 using Tdlr.DAL;
+using System.Collections.Generic;
 
 namespace Tdlr.Controllers
 {
@@ -32,8 +33,22 @@ namespace Tdlr.Controllers
             if (redirectUri == null)
                 redirectUri = "/";
 
+
             HttpContext.GetOwinContext()
                 .Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUri },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
+        }
+
+        public void AADSignUp(string redirectUri, string sign_up_hint)
+        {
+            if (redirectUri == null)
+                redirectUri = "/";
+
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict["login_hint"] = sign_up_hint;
+
+            HttpContext.GetOwinContext()
+                .Authentication.Challenge(new AuthenticationProperties (dict) { RedirectUri = redirectUri },
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }
 

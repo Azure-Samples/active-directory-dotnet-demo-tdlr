@@ -127,7 +127,7 @@
     var picker = new AadPicker(maxResultsPerPage, input, "/proxy/search", tenant);
 
     $input.on("picker-select", function (e) {
-        appendShare({ objectId: picker.Selected().objectId, displayName: picker.Selected().displayName });
+        appendShare({ objectID: picker.Selected().objectId, displayName: picker.Selected().displayName });
     });
 </script>
 

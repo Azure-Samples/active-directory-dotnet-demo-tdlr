@@ -1,6 +1,7 @@
 ﻿$aadButton = $("#aad-button");
+$emailField = $("#email");
 
-$("#email").change(function () {
+$emailField.change(function () {
     if (isEmail($(this).val())) {
         isAadTenant(getDomainFromEmail($(this).val()));
     }
@@ -39,3 +40,8 @@ function isAadTenant(domain) {
         }
     });
 }
+
+$aadButton.click(function () {
+    console.log("Redirecting...");
+    window.location.href = "/Account/SignUp/AAD?redirectUri=/tasks&sign_up_hint=" + $emailField.val();
+});

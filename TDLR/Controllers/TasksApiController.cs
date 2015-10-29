@@ -15,6 +15,7 @@ namespace Tdlr.Controllers
     public class TasksApiController : ApiController
     {
         [HttpGet]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public async Task<List<Models.Task>> GetAll()
         {
@@ -27,6 +28,7 @@ namespace Tdlr.Controllers
         }
 
         [HttpGet]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public Models.Task Get(int id)
         {
@@ -36,6 +38,7 @@ namespace Tdlr.Controllers
 
 
         [HttpPost]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public Models.Task Create(Models.Task task)
         {
@@ -53,6 +56,7 @@ namespace Tdlr.Controllers
         }
 
         [HttpPut]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public Models.Task Update(int id, Models.Task task)
         {
@@ -60,13 +64,15 @@ namespace Tdlr.Controllers
         }
 
         [HttpDelete]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public void Delete(int id)
         {
             TasksDbHelper.DeleteTask(id);
-        }
+        }   
 
         [HttpPut]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public void UpdateShares(int id, List<Models.Share> shares)
         {
@@ -74,6 +80,7 @@ namespace Tdlr.Controllers
         }
 
         [HttpGet]
+        [HostAuthentication("AADBearer")]
         [Authorize]
         public List<Models.Share> GetShares(int id)
         {

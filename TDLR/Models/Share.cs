@@ -7,7 +7,7 @@ namespace Tdlr.Models
 {
     public class Share
     {
-        public string objectID { get; set; }
+        public string objectId { get; set; }
         public string displayName { get; set; }
     }
 }

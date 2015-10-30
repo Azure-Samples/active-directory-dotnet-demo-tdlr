@@ -99,7 +99,7 @@ namespace Tdlr.DAL
 
             foreach (Share share in shares)
             {
-                AadObject aadObject = db.AadObjects.Find(share.objectID);
+                AadObject aadObject = db.AadObjects.Find(share.objectId);
                 if (aadObject != null)
                 {
                     aadObject.DisplayName = share.displayName;
@@ -108,7 +108,7 @@ namespace Tdlr.DAL
                 {
                     aadObject = new AadObject
                     {
-                        AadObjectID = share.objectID,
+                        AadObjectID = share.objectId,
                         DisplayName = share.displayName,
                     };
                 }

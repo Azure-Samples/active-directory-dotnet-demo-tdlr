@@ -90,7 +90,7 @@ namespace Tdlr.Controllers
             {
                 if (share.AadObjectID != ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value)
                 {
-                    shares.Add(new Models.Share{ objectID = share.AadObjectID, displayName = share.DisplayName });
+                    shares.Add(new Models.Share{ objectId = share.AadObjectID, displayName = share.DisplayName });
                 }
             }
             return shares;

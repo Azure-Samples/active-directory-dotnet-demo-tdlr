@@ -29,7 +29,7 @@ $("button.task-cancel").click(function (e) {
 
 function appendShare(obj) {
     $tbody = $(".modal-body").find("tbody");
-    $tbody.append('<tr class="share-row" data-objectId="' + obj.objectID + '" data-displayName="' + obj.displayName + '"><td>' + obj.displayName + '</td><td><button name="remove" type="button" value="' + obj.objectID + '" class="share-action share-remove" onclick="removeShare(this)"><i class="fa fa-times fa-lg"></i></button></td></tr>')
+    $tbody.append('<tr class="share-row" data-objectId="' + obj.objectId + '" data-displayName="' + obj.displayName + '"><td>' + obj.displayName + '</td><td><button name="remove" type="button" value="' + obj.objectId + '" class="share-action share-remove" onclick="removeShare(this)"><i class="fa fa-times fa-lg"></i></button></td></tr>')
 }
 
 $("button.task-share").click(function (e) {
@@ -84,7 +84,7 @@ $("button.btn-share").click(function (e) {
     var shares = []
     $shares.each(function () {
         shares.push({
-            objectID: $(this).attr("data-objectId"),
+            objectId: $(this).attr("data-objectId"),
             displayName: $(this).attr("data-displayName")
         });
         $(this).remove();

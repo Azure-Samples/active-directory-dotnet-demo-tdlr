@@ -1,2 +1,2 @@
 # azureroadshow-web-dotnet
-Temporary place for this sample, I'll move it shortly.
+This sample will shortly be migrated to https://github.com/azure-samples.

@@ -21,13 +21,10 @@ namespace Tdlr.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            ClaimsIdentity userClaimsId = ClaimsPrincipal.Current.Identity as ClaimsIdentity;
-            string userObjectId = userClaimsId.FindFirst(Globals.ObjectIdClaimType).Value;
-            List<string> userGroupsAndId = await ClaimHelper.GetGroups(userClaimsId);
-            userGroupsAndId.Add(userObjectId);
+            string userObjectId = ClaimsPrincipal.Current.FindFirst(Globals.ObjectIdClaimType).Value;
             ViewData["userId"] = userObjectId;
             ViewData["tenant"] = ClaimsPrincipal.Current.FindFirst(Globals.TenantIdClaimType).Value;
-            ViewData["tasks"] = TasksDbHelper.GetAllTasks(userGroupsAndId);
+            ViewData["tasks"] = TasksDbHelper.GetAllTasks(new List<string> { userObjectId });
             return View();
         }
 

@@ -42,6 +42,5 @@ function isAadTenant(domain) {
 }
 
 $aadButton.click(function () {
-    console.log("Redirecting...");
-    window.location.href = "/Account/SignUp/AAD?redirectUri=/tasks&sign_up_hint=" + $emailField.val();
+    window.location.href = "/Account/SignUp/AAD?redirectUri=/home/signup&sign_up_hint=" + $emailField.val();
 });

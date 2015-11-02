@@ -30,35 +30,13 @@ namespace Tdlr.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> About()
+        public ActionResult SignUp()
         {
-            var myGroups = new List<Group>();
-            var myDirectoryRoles = new List<DirectoryRole>();
-
-            try
-            {
-                ClaimsIdentity claimsId = ClaimsPrincipal.Current.Identity as ClaimsIdentity;
-                List<string> objectIds = await ClaimHelper.GetGroups(claimsId);
-                await GraphHelper.GetDirectoryObjects(objectIds, myGroups, myDirectoryRoles);
-            }
-            catch (AdalException e)
-            {
-                // If the user doesn't have an access token, they need to re-authorize
-                if (e.ErrorCode == "failed_to_acquire_token_silently")
-                    return RedirectToAction("Reauth", "Error", new { redirectUri = Request.Url });
-
-                return RedirectToAction("ShowError", "Error", new { errorMessage = "Error while acquiring token." });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("ShowError", "Error", new { errorMessage = e.Message });
-            }
-
-            ViewData["myGroups"] = myGroups;
-            ViewData["myDirectoryRoles"] = myDirectoryRoles;
-            ViewData["overageOccurred"] = (ClaimsPrincipal.Current.FindFirst("_claim_names") != null && 
-                (System.Web.Helpers.Json.Decode(ClaimsPrincipal.Current.FindFirst("_claim_names").Value)).groups != null);
-            return View();
+            // Completes the sign up flow by pre-filing the sign up form using claims
+            ViewBag.Email = ClaimsPrincipal.Current.FindFirst(ClaimTypes.Name).Value;
+            ViewBag.FirstName = ClaimsPrincipal.Current.FindFirst(Globals.GivennameClaimType).Value;
+            ViewBag.LastName  = ClaimsPrincipal.Current.FindFirst(Globals.SurnameClaimType).Value;
+            return View("Index");
         }
     }
 }

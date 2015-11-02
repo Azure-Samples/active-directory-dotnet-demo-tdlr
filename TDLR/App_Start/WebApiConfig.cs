@@ -11,6 +11,7 @@ namespace Tdlr
 {
     public static class WebApiConfig
     {
+        // Configure the routes for the Web API
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
@@ -70,6 +71,7 @@ namespace Tdlr
                 defaults: new { id = RouteParameter.Optional, controller = "TasksApi" }
             );
 
+            // Force that we'll always return JSON from the API
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
         }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Web;
-
-//The following libraries were added to this sample.
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Owin.Security;
@@ -9,8 +7,6 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.ActiveDirectory;
 using Owin;
-
-//The following libraries were defined and added to this sample.
 using Tdlr.Utils;
 using System.Globalization;
 using Microsoft.Owin.Security.Notifications;
@@ -27,7 +23,7 @@ namespace Tdlr
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
-            //Configure OpenIDConnect, register callbacks for OpenIDConnect Notifications
+            // Configure OpenIDConnect auth used for web app sign in
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
                 {
@@ -47,20 +43,20 @@ namespace Tdlr
                     }
                 });
 
+            // Configure OAuth Bearer auth for the web api
             app.UseWindowsAzureActiveDirectoryBearerAuthentication(new WindowsAzureActiveDirectoryBearerAuthenticationOptions
             {
-                Audience = "https://strockisdevtwo.onmicrosoft.com/tdlr",
+                // Any real tenant value can be used here, it is only used for fetching the Azure AD global metadata
                 Tenant = "strockisdevtwo.onmicrosoft.com",
-                TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                },
+                Audience = "https://strockisdevtwo.onmicrosoft.com/tdlr",
+                TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters { ValidateIssuer = false },
                 AuthenticationType = "AADBearer",
             });
         }
 
         private Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification)
         {
+            // If the user is trying to sign up, we'll force the consent screen to be shown & pre-populate the sign-in name.
             if (notification.Request.Path.Value.ToLower() == "/account/signup/aad")
             {
                 notification.ProtocolMessage.Prompt = "consent";
@@ -73,6 +69,7 @@ namespace Tdlr
 
         private Task OnAuthorizationCodeReceived(AuthorizationCodeReceivedNotification notification)
         {
+            // When the user signs in, use ADAL to get a token and cache it for later use.
             ClientCredential credential = new ClientCredential(ConfigHelper.ClientId, ConfigHelper.AppKey);
             string userObjectId = notification.AuthenticationTicket.Identity.FindFirst(Globals.ObjectIdClaimType).Value;
             string tenantId = notification.AuthenticationTicket.Identity.FindFirst(Globals.TenantIdClaimType).Value;

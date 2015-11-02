@@ -14,11 +14,5 @@ namespace Tdlr.Controllers
             ViewBag.ErrorMessage = errorMessage;
             return View();
         }
-
-        public ActionResult Reauth(string redirectUri)
-        {
-            ViewBag.RedirectUri = redirectUri;
-            return View();
-        }
     }
 }

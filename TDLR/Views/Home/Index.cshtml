@@ -19,27 +19,39 @@
                 <div class="col-md-4 brand-title">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form role="form">
+                            <form role="form" action="/account/signup">
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                                    <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address" value="@ViewBag.Email">
                                 </div>
                                 <div class="form-group" id="aad-button" hidden>
                                     <a class="btn btn-block btn-msft" href="javascript:void(0)"><img src="~/img/microsoft-icon.png" class="msft-icon" />Sign up with your Work or School account</a>
                                 </div>
+                                @if (ViewBag.Email != null)
+                                {
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password" disabled>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                    </div>
+                                }
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                    <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name" value="@ViewBag.FirstName">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                    <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name" value="@ViewBag.LastName">
                                 </div>
                                 <div class="super-tiny-text">By signing up, you agree to our <a href="javascript:void(0)">Terms and Conditions</a></div>
-                                <input type="submit" value="Sign up for TDLR;" class="btn btn-block btn-em">
+                                <input type="submit" value="Sign up for TDLR;" class="btn btn-block btn-em" >
                             </form>
                         </div>
                     </div>

@@ -12,29 +12,7 @@ namespace Tdlr
                 "~/Scripts/jquery-ui.min.js",
                 "~/Scripts/jquery.easing.min.js",
                 "~/Scripts/jquery.validate.min.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js",
-                "~/Scripts/jquery-ui.min.js",
-                "~/Scripts/jquery.easing.min.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/Scripts/AadPickerLibrary").Include(
-                    "~/Scripts/AadPickerLibrary.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/Scripts/detect_aad").Include(
-                    "~/Scripts/detect_aad.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/Scripts/tasks").Include(
-                    "~/Scripts/task-form.js"
-                ));
-
-            bundles.Add(new ScriptBundle("~/Scripts/grayscale").Include(
-                    "~/Scripts/grayscale.js"
-                ));
+            ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -49,6 +27,24 @@ namespace Tdlr
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
 
+            ////////////// Scripts Added for the Sample ///////////////////// 
+            bundles.Add(new ScriptBundle("~/Scripts/AadPickerLibrary").Include(
+                "~/Scripts/AadPickerLibrary.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/Scripts/detect_aad").Include(
+                    "~/Scripts/detect_aad.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Scripts/tasks").Include(
+                    "~/Scripts/task-form.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Scripts/grayscale").Include(
+                    "~/Scripts/grayscale.js"
+                ));
+
+            ////////////// CSS Added for the Sample /////////////////////////
             bundles.Add(new StyleBundle("~/Content/homepage").Include(
                 "~/Content/home.css"
             ));

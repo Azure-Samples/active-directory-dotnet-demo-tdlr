@@ -47,8 +47,9 @@ namespace Tdlr
             app.UseWindowsAzureActiveDirectoryBearerAuthentication(new WindowsAzureActiveDirectoryBearerAuthenticationOptions
             {
                 // Any real tenant value can be used here, it is only used for fetching the Azure AD global metadata
-                Tenant = "strockisdevtwo.onmicrosoft.com",
-                Audience = "https://strockisdevtwo.onmicrosoft.com/tdlr",
+                
+                Tenant = ConfigHelper.Tenant,
+                Audience = ConfigHelper.TaskApiResourceId,
                 TokenValidationParameters = new System.IdentityModel.Tokens.TokenValidationParameters { ValidateIssuer = false },
                 AuthenticationType = "AADBearer",
             });

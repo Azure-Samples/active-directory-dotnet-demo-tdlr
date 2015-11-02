@@ -24,8 +24,10 @@ namespace Tdlr.Utils
         private static string graphResourceId = ConfigurationManager.AppSettings["ida:GraphUrl"];
         private static string graphApiVersion = ConfigurationManager.AppSettings["ida:GraphApiVersion"];
         private static readonly string postLogoutRedirectUri = ConfigurationManager.AppSettings["ida:PostLogoutRedirectUri"];
+        private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+        private static string taskApiResourceId = ConfigurationManager.AppSettings["ida:TaskApiResourceId"];
 
-        
+
         public static string ClientId { get { return clientId; } }
         internal static string AppKey { get { return appKey; } }
         internal static string GraphResourceId { get { return graphResourceId; } }
@@ -33,6 +35,9 @@ namespace Tdlr.Utils
         internal static string AadInstance { get { return aadInstance; } }
         internal static string PostLogoutRedirectUri { get { return postLogoutRedirectUri; } }
         internal static string GraphServiceRoot { get { return graphResourceId + "/{0}"; } }
+        internal static string TaskApiResourceId { get { return taskApiResourceId; } }
+        internal static string Tenant { get { return tenant; } }
+
 
     }
 }

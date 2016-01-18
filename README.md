@@ -20,7 +20,7 @@ The full service consists of three different sample projects:
 
 - [The tdlr; web application](https://github.com/azureadsamples/azureroadshow-web), written as .NET 4.5 MVC app.
 - [The tdlr; iOS application](https://github.com/azureadsamples/azureroadshow-xamarin), written as a cross-platform Xamarin app.
-- [The tdlr; admin web portal](https://github.com/azureadsamples/azureroadshow-web-admin), written as a .NET 4.5 MVC app.
+- [The tdlr; admin web portal](https://github.com/azureadsamples/azureroadshow-web-autouserprovisioning), written as a .NET 4.5 MVC app.
 
 ## Running the tdlr; web app
 

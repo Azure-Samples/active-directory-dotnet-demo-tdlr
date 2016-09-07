@@ -30,20 +30,17 @@ You'll first need to register an app in the Azure Management Portal so that your
 
 You'll also need an Azure Activce Directory tenant in which to register your application.  Every Azure subscription has an associated tenant, which you are free to use.  You may also wish to create an additional tenant, since the tdlr; app is 'multi-tenant' - it allows users from any organization to sign up & sign in.  You'll want to create a few users in your tenant(s) for testing purposes - a guest user with a personal MSA account will not work for this sample.
 
-1. Sign in to the [Azure management portal](https://manage.windowsazure.com).
-2. Click on Active Directory in the left hand nav.
-3. Click the directory tenant where you wish to register the sample application.
-4. Click the Applications tab.
-5. In the drawer, click Add.
-6. Click "Add an application my organization is developing".
-7. Enter a friendly name for the application, for example "TDLR;", select "Web Application and/or Web API", and click next.
-8. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44322/`.  NOTE:  It is important, due to the way Azure AD matches URLs, to ensure there is a trailing slash on the end of this URL.  If you don't include the trailing slash, you will receive an error when the application attempts to redeem an authorization code.
-9. For the App ID URI, enter `https://<your_tenant_name>/tdlr`, replacing `<your_tenant_name>` with the name of your Azure AD tenant, like `mytenant.onmicrosoft.com`.  Click OK to complete the registration.
-10. While still in the Azure portal, click the Configure tab of your application.
-11. Find the Client ID value and copy it aside, you will need this later when configuring your application.
-11. Find "the application is multi-tenant" switch and flip it to yes.
-12. Create a new key for the application.  Save the configuration so you can view the key value.  Save this aside for when you configure the project in Visual Studio.
-13. In "Permissions to Other Applications", click the dropdown for "Delegated Permissions".  Check the `Read all users' basic profiles` permission, and Save the configuration.  Your app should now show two delegated permission.
+1. Sign in to the[Azure portal](https://portal.azure.com).
+2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
+2. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
+3. Click on **Registered Applications** and choose **Add**.
+4. Enter a friendly name for the application, for example 'TDLR;' and select 'Web Application and/or Web API' as the Application Type. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44322/`. NOTE:  It is important, due to the way Azure AD matches URLs, to ensure there is a trailing slash on the end of this URL.  If you don't include the trailing slash, you will receive an error when the application attempts to redeem an authorization code. Click on **Create** to create the application.
+5. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
+6. Find the Application ID value and copy it to the clipboard.
+7. Find "multi-tenanted" switch and flip it to yes.
+8. From the Settings menu, choose **Keys** and add a key - select a key duration of either 1 year or 2 years. When you save this page, the key value will be displayed, copy and save the value in a safe location - you will need this key later to configure the project in Visual Studio - this key value will not be displayed again, nor retrievable by any other means, so please record it as soon as it is visible from the Azure Portal.
+9. Configure permissions for your application - in the Settings menu, choose the 'Required permissions' section, click on **Add**, then **Select an API**, and select 'Microsoft Graph' (this is the Graph API). Then, click on  **Select Permissions** and select 'Read all users' basic profiles'.  
+
 
 ### Download the code
 

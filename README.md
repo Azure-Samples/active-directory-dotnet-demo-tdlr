@@ -30,7 +30,7 @@ You'll first need to register an app in the Azure Management Portal so that your
 
 You'll also need an Azure Activce Directory tenant in which to register your application.  Every Azure subscription has an associated tenant, which you are free to use.  You may also wish to create an additional tenant, since the tdlr; app is 'multi-tenant' - it allows users from any organization to sign up & sign in.  You'll want to create a few users in your tenant(s) for testing purposes - a guest user with a personal MSA account will not work for this sample.
 
-1. Sign in to the[Azure portal](https://portal.azure.com).
+1. Sign in to the [Azure portal](https://portal.azure.com).
 2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
 2. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
 3. Click on **Registered Applications** and choose **Add**.

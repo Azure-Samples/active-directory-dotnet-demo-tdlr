@@ -33,7 +33,7 @@ You'll also need an Azure Activce Directory tenant in which to register your app
 1. Sign in to the [Azure portal](https://portal.azure.com).
 2. On the top bar, click on your account and under the **Directory** list, choose the Active Directory tenant where you wish to register your application.
 2. Click on **More Services** in the left hand nav, and choose **Azure Active Directory**.
-3. Click on **Registered Applications** and choose **Add**.
+3. Click on **App registrations** and choose **Add**.
 4. Enter a friendly name for the application, for example 'TDLR;' and select 'Web Application and/or Web API' as the Application Type. For the sign-on URL, enter the base URL for the sample, which is by default `https://localhost:44322/`. NOTE:  It is important, due to the way Azure AD matches URLs, to ensure there is a trailing slash on the end of this URL.  If you don't include the trailing slash, you will receive an error when the application attempts to redeem an authorization code. Click on **Create** to create the application.
 5. While still in the Azure portal, choose your application, click on **Settings** and choose **Properties**.
 6. Find the Application ID value and copy it to the clipboard.

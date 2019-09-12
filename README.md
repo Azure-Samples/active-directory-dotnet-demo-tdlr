@@ -1,8 +1,17 @@
 ---
-services: active-directory
-platforms: dotnet
-author: jmprieur
+page_type: sample
+languages:
+- css
+- csharp
+- javascript
+- html
+- asp
+products:
+- azure
+description: "This code sample is one of three referenced in the Azure AD sessions of the Microsoft Cloud Roadshow. Recordings of these sessions will be available shortly here."
+urlFragment: active-directory-dotnet-demo-tdlr
 ---
+
 
 # Demo - To-do list reimagined web app
 This code sample is one of three referenced in the Azure AD sessions of the [Microsoft Cloud Roadshow](https://www.microsoftcloudroadshow.com/).  Recordings of these sessions will be available shortly [here](https://mva.microsoft.com/en-US/training-courses/add-identity-into-your-cloudbased-apps-13989).  We recommend you watch one of these recordings to understand the purpose and goals of this code sample.

@@ -1,11 +1,9 @@
 ---
 page_type: sample
 languages:
-- css
 - csharp
 - javascript
 - html
-- asp
 products:
 - azure
 description: "This code sample is one of three referenced in the Azure AD sessions of the Microsoft Cloud Roadshow. Recordings of these sessions will be available shortly here."
